@@ -22,12 +22,8 @@ $(document).ready(function(){
 
     $(document).on('keyup', function(event){
 
-      
-      
-
-        if(event.keyCode !== 16){
-
-
+        if(event.key !== 'Shift'){
+            
             let currentLetter = sentence[letterIndex];
             let nextLetter = sentence[letterIndex + 1];
 
@@ -36,6 +32,8 @@ $(document).ready(function(){
             });
 
             $('#target-letter').text(nextLetter);
+
+            letterIndex++;
             
             if(event.key.charCodeAt() == currentLetter.charCodeAt()){
                 $('#feedback').append('<span class="glyphicon glyphicon-ok"></span>');
@@ -44,9 +42,7 @@ $(document).ready(function(){
                 $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>');
             }
 
-        
             console.log(letterIndex)
-
 
         }
 
@@ -56,13 +52,9 @@ $(document).ready(function(){
             $('#keyboard-upper-container').hide();
         }
 
-
-        letterIndex++;
         nextSentence();
         
-    
     });
-
 
     function nextSentence(){
         if (letterIndex == sentence.length){
@@ -76,6 +68,6 @@ $(document).ready(function(){
         }
         $('#sentence').text(sentence);
     }
-
+    
     nextSentence();
 });
