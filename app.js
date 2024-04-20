@@ -6,10 +6,23 @@ $(document).ready(function(){
     let letterIndex = 0;
     let sentence = sentences[sentenceIndex];
     let letter = sentence[letterIndex];
+    let wrongLetters = 0;
+    let startTime, endTime;
+    let firstKeyPress = false;
+
+    let button = $('<button>').text('End Game').attr('id', 'myButton');
+    $('body').append(button);
+    $('#myButton').click(endGame);
 
     $('#target-letter').text(letter);
 
     $(document).on('keydown', function(event) {
+
+        if (!firstKeyPress) {
+            startTime = new Date();
+            firstKeyPress = true;
+        }
+
         let asciiValue = event.key.charCodeAt(0);
         $('#' + asciiValue).css('background-color', 'yellow'); 
         
@@ -22,16 +35,23 @@ $(document).ready(function(){
 
     $(document).on('keyup', function(event){
 
+        if(sentenceIndex == 4 && letterIndex == sentence.length){ // I hard coded the 4 because sentenceIndex.length is 5 but because its index starts at 0 the length ends at 4
+            endGame();
+        }
+
         if(event.key !== 'Shift'){
             
             let currentLetter = sentence[letterIndex];
             let nextLetter = sentence[letterIndex + 1];
 
-            $('#yellow-block').css('left', function(index, current) {
-                return parseInt(current, 10) + 17 + 'px'; // Adjust the 10 to change the movement distance
-            });
-
             $('#target-letter').text(nextLetter);
+
+            let span = $('<span>')
+            span.innerHTML = nextLetter;
+            span.css('background-color', 'yellow');
+            $('#sentence').append(span);
+            
+            console.log(span);
 
             letterIndex++;
             
@@ -40,10 +60,8 @@ $(document).ready(function(){
              }
             else{
                 $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>');
+                wrongLetters++;
             }
-
-            console.log(letterIndex)
-
         }
 
         $('.well').css('background-color', 'rgb(245, 245, 245)');
@@ -52,12 +70,13 @@ $(document).ready(function(){
             $('#keyboard-upper-container').hide();
         }
 
+        //console.log(sentenceIndex, sentences.length, letterIndex, sentence.length);
         nextSentence();
-        
+
     });
 
     function nextSentence(){
-        if (letterIndex == sentence.length){
+        if (letterIndex == sentence.length && sentenceIndex != 4){
             sentenceIndex++;
             sentence = sentences[sentenceIndex];
             $('#yellow-block').css('left','0px');
@@ -68,6 +87,18 @@ $(document).ready(function(){
         }
         $('#sentence').text(sentence);
     }
-    
+
+    function endGame() {
+        endTime = new Date();
+        let timeDiff = endTime - startTime;
+        let minutes = timeDiff / 60000;
+        let NumberOfWords = 240;
+        let wordsPerMinute = (NumberOfWords / minutes - 2 * wrongLetters);
+        $('#feedback').empty();
+        $('#target-letter').empty();
+        $('#yellow-block').remove();
+        $('#sentence').text('your words per minute are ' + wordsPerMinute);
+    }
+  
     nextSentence();
 });
