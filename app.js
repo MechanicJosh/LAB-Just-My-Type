@@ -65,8 +65,15 @@ $(document).ready(function(){
 
             $('#target-letter').text(nextLetter);
 
+
+            // been playing with many different variations of the same concept with no success
+            var originalText = $('#sentence').text();
+            var modifiedText = originalText.replace(nextLetter, '<span class="highlight"> </span>');
+            $('#sentence').html(modifiedText);
+
+
             let nextLetterSpan = $('<span></span>').text(nextLetter);
-            $('#sentence').append(nextLetterSpan);
+            $('#sentence').prepend(nextLetterSpan);
 
             letterIndex++;
             
