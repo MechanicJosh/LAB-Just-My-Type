@@ -29,9 +29,9 @@ $(document).ready(function(){
     card.hide();
    
 
-    let button = $('<button>').text('End Game').attr('id', 'myButton');
-    $('body').append(button);
-    $('#myButton').click(endGame);
+    // let button = $('<button>').text('End Game').attr('id', 'myButton');
+    // $('body').append(button);
+    // $('#myButton').click(endGame);
 
     $('#target-letter').text(letter);
 
