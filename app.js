@@ -1,4 +1,3 @@
-// I did add a div to the html file for the end game card
 
 $(document).ready(function(){
 
@@ -12,6 +11,7 @@ $(document).ready(function(){
     let startTime, endTime;
     let firstKeyPress = false;
 
+    $("#sentence").after('<div id="cardContainer"></div>');
     let card = $('<div>').addClass('card');
     $('#cardContainer').append(card);
     let cardContent = $('<p>').text('Do you want to play again?');
