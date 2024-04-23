@@ -1,3 +1,5 @@
+// I did add a div to the html file for the end game card
+
 $(document).ready(function(){
 
     $("#keyboard-upper-container").hide();
@@ -9,6 +11,23 @@ $(document).ready(function(){
     let wrongLetters = 0;
     let startTime, endTime;
     let firstKeyPress = false;
+
+    let card = $('<div>').addClass('card');
+    $('#cardContainer').append(card);
+    let cardContent = $('<p>').text('Do you want to play again?');
+    card.append(cardContent);
+    let yesButton = $('<button>').attr('id', 'yes-button').text('yes');
+    card.append(yesButton);
+    let noButton = $('<button>').attr('id', 'no-button').text('no');
+    card.append(noButton);
+    $('#no-button').click(function(){
+        noReplay();
+    });
+    $('#yes-button').click(function(){
+        gameReset();
+    });
+    card.hide();
+   
 
     let button = $('<button>').text('End Game').attr('id', 'myButton');
     $('body').append(button);
@@ -46,12 +65,8 @@ $(document).ready(function(){
 
             $('#target-letter').text(nextLetter);
 
-            let span = $('<span>')
-            span.innerHTML = nextLetter;
-            span.css('background-color', 'yellow');
-            $('#sentence').append(span);
-            
-            console.log(span);
+            let nextLetterSpan = $('<span></span>').text(nextLetter);
+            $('#sentence').append(nextLetterSpan);
 
             letterIndex++;
             
@@ -70,7 +85,7 @@ $(document).ready(function(){
             $('#keyboard-upper-container').hide();
         }
 
-        //console.log(sentenceIndex, sentences.length, letterIndex, sentence.length);
+        //console.log(letterIndex, sentence.length);
         nextSentence();
 
     });
@@ -96,8 +111,31 @@ $(document).ready(function(){
         let wordsPerMinute = (NumberOfWords / minutes - 2 * wrongLetters);
         $('#feedback').empty();
         $('#target-letter').empty();
-        $('#yellow-block').remove();
+        $('#yellow-block').hide();
         $('#sentence').text('your words per minute are ' + wordsPerMinute);
+        $('.well').css('background-color', 'rgb(245, 245, 245)');
+        displayCard();
+    }
+  
+    function displayCard(){
+        card.show();
+    }
+    
+    function gameReset(){
+
+        sentenceIndex = 0;
+        sentence = sentences[sentenceIndex]; 
+        letterIndex = 0;
+        wrongLetters = 0;
+        firstKeyPress = false;
+        $('#yellow-block').show();
+        $('#sentence').text(sentence);
+        card.hide();
+        
+    }
+
+    function noReplay(){
+        alert('Thanks for playing !');
     }
   
     nextSentence();
