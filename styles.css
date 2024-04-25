@@ -15,7 +15,7 @@
 
 #yellow-block {
   position: absolute;
-  margin-top: 10px;
+  margin: 10px auto;
   width: 15px;
   height: 15px;
   background-color: yellow;
@@ -43,4 +43,23 @@
 
 .glyphicon-remove {
   color : #CD2626
+}
+
+#cardContainer{
+  text-align: center;
+  margin: 10px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px auto;
+  background-color: #4968b5;
+  display: inline-block;
+  width: 200px;
+}
+
+#yes-button{
+  margin: 10px;
 }
